@@ -1,0 +1,84 @@
+# This will install an Ubuntu Environment.
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version.
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  # Configure VM RAM and CPU. Change this to meet your needs.
+  config.vm.provider :virtualbox do |virtualbox|
+    virtualbox.memory = 4096
+    virtualbox.cpus = 1
+  end
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.memory = 4096
+    libvirt.cpus = 1
+  end
+
+  # NFS is fragile, disable it and use rsync
+ config.nfs.functional = false
+ #config.synced_folder.functional = false
+ config.vm.synced_folder "./rsync", "/vagrant", type: "rsync",
+ rsync__exclude: ".git/"
+ 
+
+  #Box that installs ODL directly from an RPM on Fedora 23
+  config.vm.define "f23_rpm_be_sr2" do |f23_rpm_be_sr2|
+    # Build Vagrant box based on Fedora 23
+  f23_rpm_be_sr2.vm.box = "ubuntu/trusty64"
+  
+ 
+    # Defining a forwarded port
+    f23_rpm_be_sr2.vm.network "forwarded_port", guest: 8181, host: 8181
+
+   
+
+
+
+
+    #f23_rpm_be_sr2.vm.provision "shell", inline: "dnf install -y sudo dnf install java-1.8.0-openjdk"
+
+ 
+    f23_rpm_be_sr2.vm.provision "shell", inline: "apt-get install -y default-jre-headless"
+
+   
+   f23_rpm_be_sr2.vm.provision "shell", inline: "echo 'export JAVA_HOME=/usr/lib/jvm/default-java' >> ~/.bashrc"
+   
+   f23_rpm_be_sr2.vm.provision "shell", inline: "apt-get -y install wget"
+
+   f23_rpm_be_sr2.vm.provision "shell", inline: "wget https://nexus.opendaylight.org/content/groups/public/org/opendaylight/integration/distribution-karaf/0.4.0-Beryllium/distribution-karaf-0.4.0-Beryllium.tar.gz" 
+
+
+    f23_rpm_be_sr2.vm.provision "shell", inline: "tar -xvf distribution-karaf-0.4.0-Beryllium.tar.gz"
+
+ 
+ # Add L2Switch repo
+    f23_rpm_be_sr2.vm.provision "shell", inline: "apt-get install -y git" 
+    f23_rpm_be_sr2.vm.provision "shell", inline:  "git clone https://git.opendaylight.org/gerrit/p/l2switch.git"
+
+
+#    f23_rpm_be_sr2.vm.provision "shell", inline:  "cd /opt/opendaylight"
+
+
+ #   f23_rpm_be_sr2.vm.provision "shell", inline:  "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64 "
+
+   
+ #Install Open vSwitch
+    f23_rpm_be_sr2.vm.provision "shell", inline:  "apt-get install -y openvswitch-switch"
+    
+    #Start Open vSwitch  via systemd
+   # f23_rpm_be_sr2.vm.provision "shell", inline: "systemctl start openvswitch"
+   
+    f23_rpm_be_sr2.vm.provision "shell", inline: "sudo /usr/share/openvswitch/scripts/ovs-ctl start"
+    
+
+    #Install mininet
+    f23_rpm_be_sr2.vm.provision "shell", inline: "sudo git clone git://github.com/mininet/mininet"
+    f23_rpm_be_sr2.vm.provision "shell", inline: "mininet/util/install.sh -nf"
+    end
+
+end
