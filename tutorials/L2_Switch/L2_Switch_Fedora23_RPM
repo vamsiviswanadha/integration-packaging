@@ -1,5 +1,7 @@
 # This VagrantFile makes use of an RPM install of OpenDaylight on Fedora 23.
 
+# Edit the ~./bashrc and add the line    export JAVA_HOME=/usr/bin/java
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
