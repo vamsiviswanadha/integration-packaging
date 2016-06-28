@@ -1,4 +1,4 @@
-# This VagrantFile will install an Ubuntu Environment
+# This VagrantFile will install an Ubuntu Environment.
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
