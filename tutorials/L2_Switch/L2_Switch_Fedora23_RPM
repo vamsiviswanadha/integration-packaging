@@ -1,4 +1,4 @@
-# This VagrantFile makes use of an RPM install of Fedora 23.
+# This VagrantFile makes use of an RPM install of OpenDaylight on Fedora 23.
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
