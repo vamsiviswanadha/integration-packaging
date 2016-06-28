@@ -26,9 +26,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  rsync__exclude: ".git/"
  
 
-  #Box that installs ODL directly from an RPM on Fedora 23
+  #Box that installs ODL directly from an RPM on Ubuntu
   config.vm.define "ubnt_trst_be_sr2" do |ubnt_trst_be_sr2|
-    # Build Vagrant box based on Fedora 23
+    # Build Vagrant box based on Ubuntu
   ubnt_trst_be_sr2.vm.box = "ubuntu/trusty64"
   
  
