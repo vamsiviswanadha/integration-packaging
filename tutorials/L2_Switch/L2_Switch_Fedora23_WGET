@@ -1,4 +1,6 @@
-# This VagrantFile makes use of a WGET install of Fedora 23.
+# This VagrantFile makes use of a WGET install of OpenDaylight on Fedora 23.
+
+# Edit the ~./bashrc and add the line    export JAVA_HOME=/usr/bin/java
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
@@ -27,49 +29,44 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  
 
   #Box that installs ODL directly from an RPM on Fedora 23
-  config.vm.define "f23_wget_be_sr2" do |f23_wget_be_sr2|
+  config.vm.define "f23_wget_be" do |f23_wget_be|
     # Build Vagrant box based on Fedora 23
-  f23_wget_be_sr2.vm.box = "fedora/23-cloud-base"
+  f23_wget_be.vm.box = "fedora/23-cloud-base"
   
  
     # Defining a forwarded port
-    f23_wget_be_sr2.vm.network "forwarded_port", guest: 8181, host: 8181
+    f23_wget_be.vm.network "forwarded_port", guest: 8181, host: 8181
 
    
-    #f23_wget_be_sr2.vm.provision "shell", inline: "dnf install -y sudo dnf install java-1.8.0-openjdk"
+    f23_wget_be.vm.provision "shell", inline: "dnf install -y sudo dnf install java-1.8.0-openjdk"
 
  
-    f23_wget_be_sr2.vm.provision "shell", inline: "dnf -y install wget"
+    f23_wget_be.vm.provision "shell", inline: "dnf -y install wget"
 
-   f23_wget_be_sr2.vm.provision "shell", inline: "wget https://nexus.opendaylight.org/content/groups/public/org/opendaylight/integration/distribution-karaf/0.4.0-Beryllium/distribution-karaf-0.4.0-Beryllium.tar.gz" 
+   f23_wget_be.vm.provision "shell", inline: "wget https://nexus.opendaylight.org/content/groups/public/org/opendaylight/integration/distribution-karaf/0.4.0-Beryllium/distribution-karaf-0.4.0-Beryllium.tar.gz" 
 
 
-    f23_wget_be_sr2.vm.provision "shell", inline: "tar -xvf distribution-karaf-0.4.0-Beryllium.tar.gz"
+    f23_wget_be.vm.provision "shell", inline: "tar -xvf distribution-karaf-0.4.0-Beryllium.tar.gz"
 
  
  # Add L2Switch repo
-    f23_wget_be_sr2.vm.provision "shell", inline: "dnf install -y git" 
-    f23_wget_be_sr2.vm.provision "shell", inline:  "git clone https://git.opendaylight.org/gerrit/p/l2switch.git"
+    f23_wget_be.vm.provision "shell", inline: "dnf install -y git" 
+    f23_wget_be.vm.provision "shell", inline:  "git clone https://git.opendaylight.org/gerrit/p/l2switch.git"
 
 
-#    f23_wget_be_sr2.vm.provision "shell", inline:  "cd /opt/opendaylight"
 
-
- #   f23_wget_be_sr2.vm.provision "shell", inline:  "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64 "
-
-   
  #Install Open vSwitch
-    f23_wget_be_sr2.vm.provision "shell", inline:  "dnf install -q -y openvswitch"
+    f23_wget_be.vm.provision "shell", inline:  "dnf install -q -y openvswitch"
     
     #Start Open vSwitch  via systemd
-   f23_wget_be_sr2.vm.provision "shell", inline: "systemctl start openvswitch"
+   f23_wget_be.vm.provision "shell", inline: "systemctl start openvswitch"
    
-    f23_wget_be_sr2.vm.provision "shell", inline: "sudo /usr/share/openvswitch/scripts/ovs-ctl start"
+    f23_wget_be.vm.provision "shell", inline: "sudo /usr/share/openvswitch/scripts/ovs-ctl start"
     
 
     #Install mininet
-    f23_wget_be_sr2.vm.provision "shell", inline: "sudo git clone git://github.com/mininet/mininet"
-    f23_wget_be_sr2.vm.provision "shell", inline: "mininet/util/install.sh -nf"
+    f23_wget_be.vm.provision "shell", inline: "sudo git clone git://github.com/mininet/mininet"
+    f23_wget_be.vm.provision "shell", inline: "mininet/util/install.sh -nf"
     end
 
 end
