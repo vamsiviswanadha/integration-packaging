@@ -43,6 +43,7 @@ To create and compile the configurations put forth by the Vagrantfile, we make u
 → Setting Up the OpenDaylight Controller
 
 There are two different way of setting up the OpenDaylight Controller. 
+
 1. The first method requires that you move into the OpenDaylight working directory from your terminal and run the ./bin/karaf in order to run the controller.
 The OpenDaylight Working Directory:   cd   distribution-karaf-0.4.0-Beryllium/
 
