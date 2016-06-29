@@ -1,4 +1,4 @@
-                                            # This file is still under Construction.
+                                        # This file is still under Construction.
 
 → Installing Vagrant
 
@@ -7,9 +7,9 @@ Vagrant aids in building VDE’s with the help of basic configurations that allo
 
 Steps required to install Vagrant.
 
-Step 1. Open the terminal on your Ubuntu OS.
+Step 1. Open the terminal on your machine.
 
-Step 2. We first need to install VirtualBox. Type in the following command.
+Step 2. Install VirtualBox. Type in the following command.
 
     sudo apt-get install virtualbox
 
