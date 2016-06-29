@@ -109,3 +109,14 @@ The ‘protocols=OpenFlow13’ in the above command specifies the fact that the 
 Generating Traffic on Mininet
 
 As discussed earlier, the primary function of mininet is to act as a testing utility, prior to deploying the network in a real world environment.
+
+Trying to establish pings between hosts can be the most useful way of generating traffic between them.
+
+To allow host h1 to ping host h2, we use the following command:
+
+    h1  ping  h2
+
+To facilitate pings between each and every host connected in the network, we use the following command:
+
+    pingall
+
