@@ -60,7 +60,7 @@ You will now be within the OpenDaylight controller console wherein you need to i
 Important: All features MUST be installed in the right order for the controller to function properly.
 
 Install the required features:
-				> feature:install odl-l2switch-switch-ui
+	>feature:install odl-restconf odl-l2switch-switch odl-openflowplugin-all odl-mdsal-apidocs odl-dlux-all
 Once the required features have been installed, the next step is to open http://<Controller Ip>:8181/index.html. The OpenDaylight user interface page will be displayed. Enter the following credentials to login to the web GUI of OpenDaylight:
 Username: admin
 Password: admin  	
